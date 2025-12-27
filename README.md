@@ -168,8 +168,8 @@ urlpatterns = [
 
 # HOMEPAGE:
 
-![Screenshot 2025-12-24 142654](<img width="1452" height="1061" alt="mathserver1" src="https://github.com/user-attachments/assets/a8d9b334-3e7f-4192-ae71-372cdb9d541a" />)
-
+![Screenshot 2024-12-04 142654<img width="1452" height="1061" alt="mathserver1" src="https://github.com/user-attachments/assets/3a6a944d-3890-481e-a902-4a95c8313415" />
+]()
 
 
 
