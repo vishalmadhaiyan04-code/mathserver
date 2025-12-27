@@ -1,14 +1,14 @@
 # Ex.05 Design a Website for Server Side Processing
-# Date:19/10/2024
+# Date:01-12-2025
 # AIM:
 To design a website to calculate the power of a lamp filament in an incandescent bulb in the server side.
 
 # FORMULA:
-V=L*W*H
-V - Volume
-L - Length
-W - Width
-H - Height
+P = I2R
+P --> Power (in watts)
+ I --> Intensity
+ R --> Resistance
+
 # DESIGN STEPS:
 ## Step 1:
 Clone the repository from GitHub.
@@ -29,150 +29,114 @@ Create a HTML file to implement form based input and output.
 Publish the website in the given URL.
 
 # PROGRAM :
-  ```
-# views.py
-
-from django.shortcuts import render
-
-def calculate_volume(request):
-    result = None
-
-    if request.method == 'POST':
-
-        try:
-
-            length = float(request.POST.get('length', 0))
-            width = float(request.POST.get('width', 0))
-            height = float(request.POST.get('height', 0))
-
-            result = length * width * height
-        except ValueError:
-
-            result = "Invalid input. Please enter valid numbers."
-
-    return render(request, 'cuboid_volume/index.html', {'result': result}) 
- ```
 ```
- # urls.py
-
-from django.urls import path
-from . import views
-
-urlpatterns = [
-
-    path('', views.calculate_volume, name='calculate_volume'),
-
-]
-```
- ```
-# Html File(index.html)
-
+mohamed.html
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuboid Volume Calculator</title>
+    <title>Lamp Power Calculator</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #1a1a1a;
-            color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            background: linear-gradient(90deg,#5761B2, #1FC5A8); 
+            
         }
-        .container {
-            max-width: 400px;
-            padding: 30px;
-            background: linear-gradient(145deg, #2a2a2a, #1e1e1e);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
-            border-radius: 12px;
-            text-align: center;
-        }
+
         h1 {
-            font-size: 24px;
-            color: #ff9800;
-            margin-bottom: 20px;
+            color: darkblue;
+            font-size: 28px;
         }
-        form {
-            display: flex;
-            flex-direction: column;
+
+        .container {
+            background-color: #ffffff;  
+            width: 500px;
+            padding: 50px; 
         }
+
+        label {
+            font-size: 26px;
+            color: #333333;
+        }
+
         input {
-            margin-bottom: 15px;
-            padding: 12px;
-            font-size: 16px;
-            border: none;
+            width: 80%;
+            font-size: 24px;
             border-radius: 8px;
-            background: #333;
-            color: #f4f4f4;
-            outline: none;
-            transition: all 0.3s ease;
+            border: 2px solid #080707;
         }
-        input:focus {
-            background: #444;
-            box-shadow: 0 0 5px #ff9800;
-        }
+
         button {
-            padding: 12px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #fff;
-            background: #ff9800;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            font-size: 24px;
+            background-color: darkblue;
+            color: white;
+            border-radius: 5px;
         }
+
         button:hover {
-            background: #e68900;
-            box-shadow: 0 5px 10px rgba(255, 152, 0, 0.3);
+            background-color: navy;
         }
-        .result {
-            margin-top: 20px;
-            font-size: 20px;
-            color: #76ff03;
-            animation: fadeIn 1s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+
+        h2 {
+            color: darkgreen;
+            font-size: 24px;
         }
     </style>
 </head>
 <body>
+    <center>
+    <h1>Incandescent Bulb Power Calculator</h1>
+
     <div class="container">
-        <h1>Cuboid Volume Calculator</h1>
-        <form method="post">
+        <form method="POST">
             {% csrf_token %}
-            <input type="number" name="length" placeholder="Enter length (cm)" required>
-            <input type="number" name="width" placeholder="Enter width (cm)" required>
-            <input type="number" name="height" placeholder="Enter height (cm)" required>
-            <button type="submit">Calculate Volume</button>
+            <label>Intensity (I):</label>
+            <input type="number" name="intensity" required>
+
+            <label>Resistance (R):</label>
+            <input type="number" name="resistance" required>
+
+            <button type="submit">Calculate Power</button>
         </form>
-        <div class="result">
-            <strong>Volume of Cuboid: {{ result }}</strong>
-        </div>
+
+        {% if result %}
+            <h2>Power (P) = {{ result }} Watts</h2>
+        {% endif %}
     </div>
+    </center>
 </body>
 </html>
+
+views.py
+
+from django.shortcuts import render
+
+def azar(request):
+    result = None
+    if request.method == "POST":
+        try:
+            I = float(request.POST.get("intensity"))
+            R = float(request.POST.get("resistance"))
+            result = (I ** 2) * R
+        except:
+            result = "Invalid input"
+    return render(request, "calc/mohamed.html", {"result": result})
+
+urls.py
+
+from django.contrib import admin
+from django.urls import path
+from calc import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', views.azar, name='azar'),
+]
 ```
 
 # HOMEPAGE:
-
-![Screenshot 2024-12-04 142654<img width="1452" height="1061" alt="mathserver1" src="https://github.com/user-attachments/assets/3a6a944d-3890-481e-a902-4a95c8313415" />
-]()
-
-
-
+<img width="1452" height="1061" alt="image" src="https://github.com/user-attachments/assets/4076bebc-bc6f-4671-b7ac-78326ff0b903" />
 
 # RESULT:
+<img width="1331" height="776" alt="image" src="https://github.com/user-attachments/assets/5e6ca288-2bcf-4807-9ede-7006ac18bcab" />
+
+
 The program for performing server side processing is completed successfully.
